@@ -2,9 +2,6 @@ package dominio;
 
 import java.util.*;
 
-public class Grafo {
-    import java.util.*;
-
     /**
      * Clase que representa un grafo dirigido.
      * @param <V> Tipo de los vertices del grafo.
@@ -15,6 +12,7 @@ public class Grafo {
 
         //Lista de adyacencia.
         private Map<V, Set<V>> adjacencyList = new HashMap<>();
+
         /******************************************************************
          * Añade el vértice `v` al grafo.
          *
@@ -22,7 +20,7 @@ public class Grafo {
          * @ return ` true` si no estaba anteriormente y ` false` en caso contrario.
          * ******************************************************************/
 //Complejidad O(n^2):
-        public boolean addVertex (V v){
+        public boolean addVertex(V v) {
             if (adjacencyList.containsKey(v)) {
                 System.out.println("El vértice ya existe");
                 return false;
@@ -42,7 +40,7 @@ public class Grafo {
          * @ return ` true` si no existía el arco y ` false` en caso contrario.
          * ******************************************************************/
         //Complejidad O(n^2): --> Comprobar que no se repita el arco.
-        public boolean addEdge (V v1, V v2){
+        public boolean addEdge(V v1, V v2) {
             //Camino de V1 a V2
             Set<V> aristas = adjacencyList.get(v1);
             if (!containsVertex(v1) || aristas.contains(v2)) {
@@ -52,7 +50,8 @@ public class Grafo {
                 aristas.add(v2);
                 aristas = adjacencyList.get(v2);
                 System.out.println("La arista se ha añadido correctamente");
-            } if (!containsVertex(v2) || aristas.contains(v1)) {
+            }
+            if (!containsVertex(v2) || aristas.contains(v1)) {
                 System.out.println("La arista que une los vértices" + v1 + " y " + v2 + " ya existe");
                 return false;
             } else {
@@ -70,7 +69,7 @@ public class Grafo {
          * @ return conjunto de vértices adyacentes.
          ******************************************************************/
         //Complejidad O(n^2):
-        public Set<V> obtainAdjacents (V v) throws Exception {
+        public Set<V> obtainAdjacents(V v) throws Exception {
             //Comprueba si el vertice está en la lista de adyacencia.
             if (adjacencyList.get(v) != null) {
                 throw new Exception("El vértice no existe");
@@ -87,7 +86,7 @@ public class Grafo {
          * @ return una cadena de caracteres con la lista de adyacencia.
          ******************************************************************/
         @Override
-        public String toString () {
+        public String toString() {
             String lista = "";
             for (V v : adjacencyList.keySet()) {
                 lista += (v.toString() + " está conectado con: " + adjacencyList.get(v).toString() + "\n");
@@ -102,12 +101,10 @@ public class Grafo {
          * @ return ` true` si ` v` es un vértice del grafo.
          ******************************************************************/
         //Complejidad O(n^2):
-        public boolean containsVertex (V v){
-            if (adjacencyList.containsKey(v)) {
-                System.out.println(v + " El vértice ya existe en el grafo");
+        public boolean containsVertex(V v) {
+            if (adjacencyList.keySet().contains(v)) {
                 return true;
             } else {
-                System.out.println(v + " El vértice no existe en el grafo");
                 return false;
             }
         }
@@ -120,14 +117,26 @@ public class Grafo {
          * @ param v2 el vértice destino.
          * @ return lista con la secuencia de vértices del camino má s corto entre ` v1` y ` v2`
          */
-        public List<V> shortestPath (V v1, V v2){
-            boolean encontrado = false;
+        public List<V> shortestPath(V v1, V v2) {
+            if (!containsVertex(v1) || !containsVertex(v2)) {
+                return null;
+            }
+            //boolean encontrado = false;
             LinkedList<V> cola = new LinkedList<V>();
-            List<V> camino = new ArrayList<>();
-            cola.add(v1);
+            ArrayList<V> camino = new ArrayList<>();
+            Set<V> visitados = new HashSet<>();
+
+            camino.add(v1);
+            for (V v : adjacencyList.keySet()) {
+                cola.add(v);
+            }
+            boolean encontrado = false;
+
             while (!cola.isEmpty() && !encontrado) {
                 V actual = cola.pop();
                 camino.add(actual);
+                visitados.add(actual);
+
                 if (actual.equals(v2)) {
                     encontrado = true;
                 } else {
@@ -140,10 +149,24 @@ public class Grafo {
                     }
                 }
             }
-            System.out.println("El camino más corto entre " + v1 + " y " + v2 + " es: " + camino.toString());
-            return camino;
+            if (camino.get(camino.size() - 1) == v2) {
+                ArrayList<V> caminofinal = new ArrayList<>();
+                caminofinal.add(camino.get(camino.size() - 1));
+                for (int i = 1; i < camino.size(); i++) {
+                    caminofinal.add(camino.get(camino.size() - (i + 1)));
+                    if (camino.get(i) == v1) {
+                camino.remove(camino.size() - (i + 1));
+                i--;
+            }
+        }
+    }
+                Collections.reverse(caminofinal);
+                return caminofinal;
+
+                System.out.println("El camino más corto entre " + v1 + " y " + v2 + " es: " + camino.toString());
+                return camino;
+            }
+            return null;
         }
     }
 
-
-}

@@ -3,10 +3,12 @@ import org.junit.Test;
 
 import java.util.*;
 
+import static org.junit.Assert.assertEquals;
+
 public class TestGrafo {
 
     @Test
-    public void shortestPathFindsAPath(){
+    public void shortestPathFindsAPath() {
         System.out.println("\nTest shortestPathFindsAPath");
         System.out.println("----------------------------");
 // We build the graph
@@ -23,4 +25,5 @@ public class TestGrafo {
         expectedPath.add(4);
 //We check if the returned path is equal to the expected one.
         assertEquals(expectedPath, g.shortestPath(1, 4));
+    }
 }
