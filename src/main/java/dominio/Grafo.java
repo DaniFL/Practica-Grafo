@@ -118,58 +118,57 @@ import java.util.*;
          * @ return lista con la secuencia de vértices del camino má s corto entre ` v1` y ` v2`
          */
         public List<V> shortestPath(V v1, V v2) {
-            if (!containsVertex(v1) || !containsVertex(v2)) {
-                return null;
-            }
-            //boolean encontrado = false;
+            //Inicializamos las estructuras de datos donde se almacenarán los vértices contenidos en el camino más corto:
             LinkedList<V> cola = new LinkedList<V>();
             ArrayList<V> camino = new ArrayList<>();
-            Set<V> visitados = new HashSet<>();
 
-            camino.add(v1);
-            for (V v : adjacencyList.get(v1)) {
-                cola.add(v);
-            }
-            boolean encontrado = false;
+            //Comprobamos si los vertices existen:
+            if (!containsVertex(v1) || !containsVertex(v2)) {
+                return null;
+            } else {
+                cola.add(v1);
+                //Inicializamos las estructuras de datos para calcular el camino del grafo:
+                HashMap<V, V> verticeInicio = new HashMap<>();
+                HashMap<V, Integer> distancia = new HashMap<>();
+                HashMap<V, Boolean> verticesVisitados = new HashMap<>();
 
-            while (!cola.isEmpty() && !encontrado) {
-                V verticeActual = cola.pop();
-                camino.add(verticeActual);
-                visitados.add(verticeActual);
+                //Recorremos la lista de adyacencia definiendo los valores que tomarán las estructuras de datos definidas:
+                for (V v : adjacencyList.keySet()) {
+                    distancia.put(v, Integer.MAX_VALUE);
+                    verticeInicio.put(v, null);
+                    verticesVisitados.put(v, false);
+                }
+                //Inicializacmos el primer vertice con distancia 0:
+                distancia.put(v1, 0);
+                //Añadimos el vertice inicial al Map de vertices visitados:
+                verticesVisitados.put(v1, true);
 
-                if (verticeActual.equals(v2)) {
-                    encontrado = true;
-                } else {
-                    for (V v : adjacencyList.get(verticeActual)) {
-                        if (camino.contains(v)) {
-                            continue;
-                        } else {
+                //Búsqueda del camino más corto:
+                while (!cola.isEmpty()) {
+                    V actual = cola.poll();
+                    //Comprobamos si el vertice actual es el destino:
+                    for (V v : adjacencyList.get(actual)) {
+                        if (distancia.get(v) > distancia.get(actual) + 1) {
+                            distancia.put(v, distancia.get(actual) + 1);
+                            verticeInicio.put(v, actual);
+                        }
+                        if (!verticesVisitados.get(v)) {
+                            verticesVisitados.put(v, true);
                             cola.add(v);
                         }
                     }
                 }
-            }
-            if (camino.get(camino.size() - 1) == v2) {
-                ArrayList<V> caminofinal = new ArrayList<V>();
-                caminofinal.add(camino.get(camino.size() - 1));
-                for (int i = 1; i < camino.size(); i++) {
-
-                    if (adjacencyList.get(camino.get(camino.size() - i)).contains(camino.get(camino.size() - (i + 1)))){
-                        caminofinal.add(camino.get(camino.size() - (i+1)));
-                    } else {
-                        if (camino.get(i) == v1) {
-                        } else {
-                            camino.remove(camino.size() - (i + 1));
-                            i--;
-                        }
-                    }
-
+                //Inicializamos un vértice auxiliar para encontrar nuestro vértic destino a partir de sus aristas:
+                V aux = v2;
+                while (aux != null) {
+                    camino.add(aux);
+                    aux = verticeInicio.get(aux);
                 }
-                Collections.reverse(caminofinal);
-                return caminofinal;
-            } else {
-                return null;
+                //Devolvemos el camino más corto:
+                Collections.reverse(camino);
+                return camino;
             }
         }
     }
+
 

@@ -23,13 +23,25 @@ public class TestGrafo {
         g.addEdge(1, 5);
         g.addEdge(2, 3);
         g.addEdge(3, 4);
+        g.addEdge(4, 5);
         g.addEdge(5, 4);
+        g.addEdge(5, 2);
+
 // We build the expected path
         List<Integer> expectedPath = new ArrayList<>();
         expectedPath.add(1);
         expectedPath.add(5);
         expectedPath.add(4);
+
+        List<Integer> expectedPath2 = new ArrayList<>();
+        expectedPath2.add(3);
+
+        expectedPath2.add(2);
 //We check if the returned path is equal to the expected one.
         assertEquals(expectedPath, g.shortestPath(1, 4));
+        assertEquals(expectedPath2, g.shortestPath(3, 2));
+        System.out.println("Expected path: " + expectedPath + "\n" + "Returned path: " + g.shortestPath(1, 4));
+        System.out.println("Expected path: " + expectedPath2 + "\n" + "Returned path: " + g.shortestPath(3, 2));
+        System.out.println("Test shortestPathFindsAPath passed");
     }
 }
