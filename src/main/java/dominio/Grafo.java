@@ -44,7 +44,7 @@ import java.util.*;
             //Camino de V1 a V2
             Set<V> aristas = adjacencyList.get(v1);
             if (!containsVertex(v1) || aristas.contains(v2)) {
-                System.out.println("La arista que une los vértices" + v1 + " y " + v2 + " ya existe");
+                System.out.println("La arista que une los vértices " + v1 + " y " + v2 + " ya existe");
                 return false;
             } else {
                 aristas.add(v2);
@@ -52,7 +52,7 @@ import java.util.*;
                 System.out.println("La arista se ha añadido correctamente");
             }
             if (!containsVertex(v2) || aristas.contains(v1)) {
-                System.out.println("La arista que une los vértices" + v1 + " y " + v2 + " ya existe");
+                System.out.println("La arista que une los vértices " + v1 + " y " + v2 + " ya existe");
                 return false;
             } else {
                 aristas.add(v1);
@@ -127,20 +127,20 @@ import java.util.*;
             Set<V> visitados = new HashSet<>();
 
             camino.add(v1);
-            for (V v : adjacencyList.keySet()) {
+            for (V v : adjacencyList.get(v1)) {
                 cola.add(v);
             }
             boolean encontrado = false;
 
             while (!cola.isEmpty() && !encontrado) {
-                V actual = cola.pop();
-                camino.add(actual);
-                visitados.add(actual);
+                V verticeActual = cola.pop();
+                camino.add(verticeActual);
+                visitados.add(verticeActual);
 
-                if (actual.equals(v2)) {
+                if (verticeActual.equals(v2)) {
                     encontrado = true;
                 } else {
-                    for (V v : adjacencyList.get(actual)) {
+                    for (V v : adjacencyList.get(verticeActual)) {
                         if (camino.contains(v)) {
                             continue;
                         } else {
@@ -150,23 +150,26 @@ import java.util.*;
                 }
             }
             if (camino.get(camino.size() - 1) == v2) {
-                ArrayList<V> caminofinal = new ArrayList<>();
+                ArrayList<V> caminofinal = new ArrayList<V>();
                 caminofinal.add(camino.get(camino.size() - 1));
                 for (int i = 1; i < camino.size(); i++) {
-                    caminofinal.add(camino.get(camino.size() - (i + 1)));
-                    if (camino.get(i) == v1) {
-                camino.remove(camino.size() - (i + 1));
-                i--;
-            }
-        }
-    }
+
+                    if (adjacencyList.get(camino.get(camino.size() - i)).contains(camino.get(camino.size() - (i + 1)))){
+                        caminofinal.add(camino.get(camino.size() - (i+1)));
+                    } else {
+                        if (camino.get(i) == v1) {
+                        } else {
+                            camino.remove(camino.size() - (i + 1));
+                            i--;
+                        }
+                    }
+
+                }
                 Collections.reverse(caminofinal);
                 return caminofinal;
-
-                System.out.println("El camino más corto entre " + v1 + " y " + v2 + " es: " + camino.toString());
-                return camino;
+            } else {
+                return null;
             }
-            return null;
         }
     }
 

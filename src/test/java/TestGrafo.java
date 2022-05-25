@@ -1,9 +1,9 @@
 import dominio.Grafo;
+
 import org.junit.Test;
-
 import java.util.*;
+import static junit.framework.TestCase.assertEquals;
 
-import static org.junit.Assert.assertEquals;
 
 public class TestGrafo {
 
@@ -13,6 +13,12 @@ public class TestGrafo {
         System.out.println("----------------------------");
 // We build the graph
         Grafo<Integer> g = new Grafo();
+        g.addVertex(1);
+        g.addVertex(2);
+        g.addVertex(3);
+        g.addVertex(4);
+        g.addVertex(5);
+
         g.addEdge(1, 2);
         g.addEdge(1, 5);
         g.addEdge(2, 3);
