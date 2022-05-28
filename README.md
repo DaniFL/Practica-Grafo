@@ -2,7 +2,7 @@
 
 ## Autor y fecha
 `Daniel Fernández López`
-`27/06/2022`
+`27/05/2022`
 
 ![Copyright.png](img.png)
 
@@ -18,7 +18,7 @@ language governing permissions and limitations under the License.
 ## Descripción: 
 
 El objetivo de esta práctica es implementar un algoritmo para calcular el camino más corto entre dos vértices de un grafo, dirigido por puebas y mostrarlo por pantalla.
-El software esta desarrollado con _Maven_ y se ha implementado en un repositorio de _GitHub_, con el cual se puede consultar el código fuente.
+El software esta desarrollado con _Maven_ y se ha implementado en un repositorio de _GitHub_, en el que se puede consultar el código fuente.
 
 Un grafo es una estructura matemática de datos que permite representar las conexiones entre sus vértices y sus aristas.
 Donde los vértices son también denominados nodos, los cuales almacenan la información y pueden estar relacionados entre sí mediante
@@ -33,6 +33,10 @@ la segmentación del mercado y la identificación de clientes potenciales.
 - Compilación:
 
 `$ mvn package` `$ mvn compile`
+
+- Ejecución Tests: 
+
+`$ mvn test`
 
 - Creación jar: 
 

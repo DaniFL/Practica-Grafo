@@ -15,11 +15,11 @@ import java.util.*;
 
         /******************************************************************
          * Añade el vértice `v` al grafo.
+         * Complejidad: O(1)
          *
          * @param v vértice a añadir.
          * @return ` true` si no estaba anteriormente y ` false` en caso contrario.
          * ******************************************************************/
-//Complejidad O(n^2):
         public boolean addVertex(V v) {
             if (adjacencyList.containsKey(v)) {
                 System.out.println("El vértice ya existe");
@@ -34,12 +34,12 @@ import java.util.*;
         /******************************************************************
          * Añade un arco entre los vértices ` v1` y ` v2` al grafo.
          * En caso de que no exista alguno de los vértices, lo añade también.
+         * Complejidad: O(n)
          *
          * @param v1 el origen del arco.
          * @param v2 el destino del arco.
          * @return ` true` si no existía el arco y ` false` en caso contrario.
          * ******************************************************************/
-        //Complejidad: O(n^2)
         public boolean addEdge(V v1, V v2) {
             //Camino de V1 a V2
             Set<V> aristas = adjacencyList.get(v1);
@@ -64,11 +64,11 @@ import java.util.*;
 
         /******************************************************************
          * Obtiene el conjunto de vértices adyacentes a ` v`.
+         * Complejidad: O(1)
          *
          * @param v vértice del que se obtienen los adyacentes.
          * @return conjunto de vértices adyacentes.
          ******************************************************************/
-        //Complejidad O(n^2):
         public Set<V> obtainAdjacents(V v) throws Exception {
             //Comprueba si el vertice está en la lista de adyacencia.
             if (adjacencyList.get(v) != null) {
@@ -96,11 +96,11 @@ import java.util.*;
 
         /******************************************************************
          * Comprueba si el grafo contiene el vértice dado.
+         * Complejidad: O(1)
          *
          * @param v vértice para el que se realiza la comprobació n.
          * @return ` true` si ` v` es un vértice del grafo.
          ******************************************************************/
-        //Complejidad O(n^2):
         public boolean containsVertex(V v) {
             if (adjacencyList.keySet().contains(v)) {
                 return true;
@@ -112,6 +112,7 @@ import java.util.*;
         /**
          * Obtiene, en caso de que exista, el camino má s corto entre
          * ` v1` y ` v2`. En caso contrario, devuelve ` null`.
+         * Complejidad: O(n)
          *
          * @param v1 el vértice origen.
          * @param v2 el vértice destino.
