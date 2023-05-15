@@ -1,4 +1,4 @@
-# Practica 5: Cálculo camino más corto entre dos vértices
+# Practica: Cálculo camino más corto entre dos vértices
 
 ## Autor y fecha
 `Daniel Fernández López`
